@@ -18,7 +18,7 @@ def download_file(url: str, output_path: Path):
     return {"file": output_path.name, "status": "downloaded"}
 
 def main():
-    input_dir = Path("data/input")
+    input_dir = Path(__file__).resolve().parent.parent / "data" / "input"
     input_dir.mkdir(parents=True, exist_ok=True)
 
     # Dataset IDs from collection 189
