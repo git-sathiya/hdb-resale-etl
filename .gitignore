@@ -1,4 +1,7 @@
 /hdb-etl-env*
 *.pyc
-/data*
-/output*
+.DS_Store
+/data/
+/output/
+**/data/
+**/output/
