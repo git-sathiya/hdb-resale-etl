@@ -1,2 +1,4 @@
 /hdb-etl-env*
 *.pyc
+/data*
+/output*
