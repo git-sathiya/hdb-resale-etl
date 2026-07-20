@@ -34,3 +34,7 @@ Thumbs.db
 **/AWS_ARCHITECTURE_GUIDE.md
 src/aws_architecture.xml
 
+# Local notebooks
+/notebooks/
+
+
