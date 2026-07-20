@@ -41,7 +41,7 @@ All 5 datasets successfully downloaded to `data/input/`:
 
 ### Architecture
 
-![AWS Architecture Data Pipeline](Images - Run_Audits/AWS%20Part_2-Architecture%20Data%20Pipeline.png)
+![AWS Architecture Data Pipeline](Images - Run_Audits/Part_2-AWS%20Architecture%20Data%20Pipeline.png)
 
 ```
 data.gov.sg API
