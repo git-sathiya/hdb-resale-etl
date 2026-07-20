@@ -1,4 +1,4 @@
-# Walkthrough — HDB Resale ETL Pipeline (Local → AWS S3 Migration)
+# HDB Resale ETL Pipeline (Local → AWS S3 Migration)
 
 All tasks have been successfully completed across two phases:
 1. **Phase 1 – Local ETL**: Programmatic data ingestion and pipeline execution on local disk.
@@ -40,6 +40,8 @@ All 5 datasets successfully downloaded to `data/input/`:
 ## Phase 2 — AWS S3 Migration
 
 ### Architecture
+
+![AWS Architecture Data Pipeline](docs/AWS%20Architecture%20Data%20Pipeline.png)
 
 ```
 data.gov.sg API
@@ -134,6 +136,40 @@ s3://hdb-resale-etl-523947005862/
 
 ---
 
+## Phase 3 — AWS Data Catalog & Athena Integration
+
+To make S3 outputs queryable, we configure a **Glue Data Catalog Database** and define **Athena External Tables** directly mapping each storage path.
+
+### Schema Configuration Script
+- **[aws_setup_athena.py](aws_setup_athena.py)**: Auto-provisions the Glue Database (`hdb_resale_db`) and creates tables using Hive DDL (with OpenCSV SerDe for CSV processing). Bypasses Glue Crawler service restrictions for robustness.
+
+### Data Catalog & Query Verification (2026-07-19)
+The tables were successfully registered and verified via programmatic SQL queries executed on Athena:
+
+```
+Database: hdb_resale_db
+Tables Registered: raw, cleaned, transformed, hashed, failed
+
+Dataset Row Counts (Verified via Athena SQL):
+  - total_raw_rows:         982,011
+  - total_cleaned_rows:     951,468
+  - total_transformed_rows: 951,468
+  - total_hashed_rows:      951,468
+  - total_failed_rows:       30,543
+```
+
+A sample query verifying the final hashed identifier returns correctly aligned values:
+```
+month:             1990-01
+town:              ANG MO KIO
+flat_type:         1 ROOM
+resale_price:      9000.0
+resale_identifier: S3097001A
+hashed_identifier: c8f96282cefd12811cf41a908da692d5d87f8e19598f53e66d5a045021959a3b
+```
+
+---
+
 ## How to Run
 
 ### Local Mode (default, no AWS needed)
@@ -161,3 +197,10 @@ python main.py
 export $(grep -v '^#' .env | xargs)
 python src/ingest.py
 ```
+
+### Provision Glue Data Catalog Database, Tables & Run Athena Verification
+```bash
+export $(grep -v '^#' .env | xargs)
+python aws_setup_athena.py
+```
+

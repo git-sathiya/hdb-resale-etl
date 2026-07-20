@@ -3,6 +3,7 @@ import numpy as np
 from datetime import datetime
 
 def compute_remaining_lease(df: pd.DataFrame) -> pd.DataFrame:
+    """Compute remaining lease duration in years & months based on a 99-year lease from lease_commence_date."""
     df = df.copy()
     lease_col = "remaining_lease"
 
@@ -24,6 +25,7 @@ def compute_remaining_lease(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 def create_resale_identifier(df: pd.DataFrame) -> pd.DataFrame:
+    """Generate a unique surrogate key (resale_identifier) based on block, average price, month, and town."""
     df = df.copy()
 
     month_dt = pd.to_datetime(df["month"], errors="coerce")
@@ -46,6 +48,7 @@ def create_resale_identifier(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 def remove_duplicates_keep_highest(df: pd.DataFrame):
+    """De-duplicate records based on transaction characteristics, keeping the record with the highest price."""
     key_cols = [c for c in df.columns if c != "resale_price"]
     df = df.copy()
     df["resale_price_num"] = pd.to_numeric(df["resale_price"], errors="coerce")
@@ -57,3 +60,4 @@ def remove_duplicates_keep_highest(df: pd.DataFrame):
     failed = df.loc[dup_mask].drop(columns=["resale_price_num"])
     kept = deduped.drop(columns=["resale_price_num"])
     return kept, failed
+

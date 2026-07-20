@@ -1,8 +1,35 @@
+# Virtual environments
 /hdb-etl-env*
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache & compiled files
+__pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Operating system files
 .DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# Project local data & environment secrets
+.env
 /data/
 /output/
 **/data/
 **/output/
-.env
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local reference files
+docs/AWS_ARCHITECTURE_GUIDE.md
+src/aws_architecture.xml
