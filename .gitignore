@@ -31,5 +31,6 @@ Thumbs.db
 *.swo
 
 # Local reference files
-docs/AWS_ARCHITECTURE_GUIDE.md
+**/AWS_ARCHITECTURE_GUIDE.md
 src/aws_architecture.xml
+
